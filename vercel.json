@@ -1,11 +1,8 @@
 {
   "version": 2,
   "buildCommand": "npx prisma generate && npm run build",
-  "redirects": [
-    { "source": "/", "destination": "/api", "permanent": false }
-  ],
   "rewrites": [
-    { "source": "/:path+", "destination": "/api" }
+    { "source": "/(.*)", "destination": "/api" }
   ],
   "functions": {
     "api/index.js": {
@@ -14,3 +11,4 @@
     }
   }
 }
+
