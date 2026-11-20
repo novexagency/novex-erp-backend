@@ -21,7 +21,7 @@
     "verify:production": "tsx scripts/verify-production-runtime.ts"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
