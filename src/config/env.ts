@@ -50,12 +50,24 @@ const envSchema = z.object({
   BACKUP_RETENTION_DAYS: z.coerce.number().int().positive().default(30),
 });
 
+const isVercel = Boolean(process.env.VERCEL);
+
+function failBoot(message: string, details?: unknown): never {
+  console.error(message);
+  if (details !== undefined) console.error(details);
+  // process.exit on Vercel yields opaque FUNCTION_INVOCATION_FAILED — throw instead.
+  if (isVercel) {
+    const err = new Error(message);
+    (err as Error & { details?: unknown }).details = details;
+    throw err;
+  }
+  process.exit(1);
+}
+
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  console.error("Invalid environment variables:");
-  console.error(parsed.error.flatten().fieldErrors);
-  process.exit(1);
+  failBoot("Invalid environment variables", parsed.error.flatten().fieldErrors);
 }
 
 function assertProductionSafety(data: z.infer<typeof envSchema>): void {
@@ -90,9 +102,7 @@ function assertProductionSafety(data: z.infer<typeof envSchema>): void {
   }
 
   if (failures.length === 0) return;
-  console.error("Production configuration rejected:");
-  for (const failure of failures) console.error(`- ${failure}`);
-  process.exit(1);
+  failBoot("Production configuration rejected", failures);
 }
 
 assertProductionSafety(parsed.data);
