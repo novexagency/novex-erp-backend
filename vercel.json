@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "npx prisma generate && npm run build",
+  "redirects": [
+    { "source": "/", "destination": "/api", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/:path+", "destination": "/api" }
+  ],
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "{prisma/**,assets/**,node_modules/pdfkit/js/data/**,node_modules/pdfkit/js/standard-fonts/**}"
+    }
+  }
+}

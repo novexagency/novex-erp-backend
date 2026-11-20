@@ -1,0 +1,66 @@
+{
+  "name": "novex_erp_back",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Novex ERP backend API",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "start:prod": "node dist/server.js",
+    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "node scripts/guard-migrate-deploy.js",
+    "prisma:push": "prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "db:setup": "prisma db push && tsx prisma/seed.ts",
+    "backup:db": "tsx scripts/backup-database.ts",
+    "restore:drill": "tsx scripts/restore-drill.ts",
+    "verify:production": "tsx scripts/verify-production-runtime.ts"
+  },
+  "engines": {
+    "node": "26.x"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "keywords": [
+    "novex",
+    "erp",
+    "express"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@neon/config": "^1.13.0",
+    "@neon/env": "^2.1.0",
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^3.0.3",
+    "bwip-js": "^4.11.4",
+    "cloudinary": "^2.11.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "exceljs": "^4.4.0",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.5.0",
+    "pdfkit": "^0.20.2",
+    "prisma": "^5.22.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.3.0",
+    "@types/node": "^22.15.0",
+    "@types/pdfkit": "^0.17.7",
+    "tsx": "^4.23.15",
+    "typescript": "^5.8.3"
+  }
+}
