@@ -44,9 +44,15 @@ const envSchema = z.object({
   CLOUDINARY_API_SECRET: z.string().min(1),
   CLOUDINARY_FOLDER: z.string().default("novex-erp"),
   /** Shared secret for Central Control Panel → ERP platform API calls */
-  PLATFORM_SERVICE_KEY: z.string().min(16).optional(),
+  PLATFORM_SERVICE_KEY: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().min(16).optional()
+  ),
   /** Optional absolute/relative directory for logical backups */
-  BACKUP_DIR: z.string().optional(),
+  BACKUP_DIR: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().optional()
+  ),
   BACKUP_RETENTION_DAYS: z.coerce.number().int().positive().default(30),
 });
 
